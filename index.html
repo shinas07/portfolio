@@ -690,7 +690,7 @@
         </div>
       </div>
 
-      <form id="submit-form" action=""> 
+      <form id="submit-form"  action=""> 
         <div class="row">
           <div class="col-md-6 form-group">
             <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -733,7 +733,7 @@
     $("#submit-form").submit((e)=>{
         e.preventDefault()
         $.ajax({
-            url:"https://script.google.com/macros/s/AKfycbyBWE_TYFWtPgV8PxglNboFl91sBGjN302PFo5ilpSSkm56uHTt7489tYRJm0efi7s2QQ/exec",
+            url:"https://script.google.com/macros/s/AKfycbzp08FIZxE7lMdytNJ38q2lk_qAn-fgjWKvnW5oIRLPtseJwpLE0kcYEnAb9ucbY-2KrQ/exec",
             data:$("#submit-form").serialize(),
             method:"post",
             success:function (response){
