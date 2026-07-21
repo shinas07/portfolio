@@ -50,7 +50,10 @@ export function Hero() {
                 </span>
                 {site.role} · {site.company}
               </span>
-              <span className="hidden sm:inline">{site.location}</span>
+              {/* No location here. Anything on this line reads as belonging to
+                  the company name beside it — Shinas is in Kerala, the company
+                  is in Gurugram. Location lives in the footer instead, and each
+                  role states its own city in the experience section. */}
             </p>
           </Reveal>
 

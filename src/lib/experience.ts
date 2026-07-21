@@ -26,7 +26,9 @@ export const experience: Role[] = [
   {
     company: "Lunar Global Technologies",
     title: "Full Stack Engineer",
-    location: "Remote",
+    // Company is Gurugram-based; Shinas works remotely from Kerala. Stating
+    // both stops "Remote" from being read against his Kerala home base.
+    location: "Gurugram · Remote",
     period: "May 2026 — Present",
     current: true,
     summary:

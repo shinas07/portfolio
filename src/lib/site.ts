@@ -19,7 +19,7 @@ export const site = {
   fullName: "Shinas Aman PK",
   role: "Full Stack Engineer",
   company: "Lunar Global Technologies",
-  location: "Delhi, India",
+  location: "Kerala, India",
   tagline:
     "Full-stack engineer building real-time, high-concurrency systems — exchange order books, live calling platforms, learning marketplaces — in Python and TypeScript.",
   email: "shinasamanpk@gmail.com",

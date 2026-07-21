@@ -1,6 +1,6 @@
 # Shinas Aman — Portfolio
 
-Personal portfolio of Shinas Aman, full-stack engineer (Python · TypeScript), Delhi, India.
+Personal portfolio of Shinas Aman, full-stack engineer (Python · TypeScript), Kerala, India.
 
 **Live:** https://portfolio-five-gamma-722rq3ixd7.vercel.app/
 
