@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — "engineering instrument" system.
+
+   Colours are authored in OKLCH: oklch(lightness chroma hue). Every neutral
+   shares one hue/chroma with only L changing, which is why the greys stay
+   neutral instead of drifting purple the way hand-picked hex ramps do.
+
+   Three surface tiers (background → surface → raised) create depth without
+   shadows; hairline borders do the separating. Exactly one accent.
+
+   Dark is the default (`:root`). Light applies when the OS asks for it, or
+   when a toggle sets `data-theme` on <html>; the `:not([data-theme="dark"])`
+   guard lets a manual choice beat the OS preference.
+--------------------------------------------------------------------------- */
+
+:root {
+  --background: oklch(0.13 0.006 255);
+  --surface: oklch(0.17 0.007 255);
+  --raised: oklch(0.21 0.008 255);
+  --border: oklch(0.27 0.01 255);
+  --foreground: oklch(0.96 0.004 255);
+  --muted: oklch(0.66 0.014 255);
+
+  /* The one accent. Change this line, the whole site follows. */
+  --accent: oklch(0.78 0.14 190);
+  --accent-contrast: oklch(0.13 0.006 255);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --background: oklch(0.985 0.002 255);
+    --surface: oklch(0.965 0.004 255);
+    --raised: oklch(0.94 0.005 255);
+    --border: oklch(0.89 0.007 255);
+    --foreground: oklch(0.21 0.012 255);
+    --muted: oklch(0.5 0.016 255);
+    --accent: oklch(0.52 0.13 190);
+    --accent-contrast: oklch(0.985 0.002 255);
+  }
+}
+
+:root[data-theme="light"] {
+  --background: oklch(0.985 0.002 255);
+  --surface: oklch(0.965 0.004 255);
+  --raised: oklch(0.94 0.005 255);
+  --border: oklch(0.89 0.007 255);
+  --foreground: oklch(0.21 0.012 255);
+  --muted: oklch(0.5 0.016 255);
+  --accent: oklch(0.52 0.13 190);
+  --accent-contrast: oklch(0.985 0.002 255);
+}
+
+/* `inline` makes generated utilities emit `var(--background)` rather than a
+   resolved colour, so the blocks above can swap themes at runtime. */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --spacing: 0.25rem;
+
+  /* Display type: scales with viewport between hard limits — no font-size
+     breakpoints to maintain, no overflow on narrow phones. */
+  --text-display: clamp(3rem, 9vw, 6.5rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.04em;
+}
+
+/* Frosted panel — used sparingly: nav, terminal windows, portrait frame.
+   Glass everywhere is noise; glass in three places is depth. */
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 78%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+html {
+  /* Decorative washes intentionally bleed past the right edge (hero glow
+     extends up behind the transparent nav). `clip` swallows the horizontal
+     overflow without creating a scroll container — unlike `hidden`, it can
+     never produce a sideways scrollbar or break position: sticky. */
+  overflow-x: clip;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Blueprint dot-grid: fixed, behind everything, fading toward the bottom so
+   long sections don't read as busy. Pure CSS — costs one paint layer. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.32;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+}
+
+/* Honour the OS "reduce motion" setting globally, so no future animation can
+   forget to. Components still use useReducedMotion where the right answer is
+   different markup rather than a frozen animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
